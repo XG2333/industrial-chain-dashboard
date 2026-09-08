@@ -1,0 +1,70 @@
+{
+  "name": "cross_industry_rules",
+  "version": "v1",
+  "source": "SAVED_RULE_SET",
+  "status": "ACTIVE",
+  "production_ready": false,
+  "prompt_version": null,
+  "rules_hash": "751ab1f860b72fabd4a8c8185b35e2633eada9d3828c20b7fda964b330b9dc03",
+  "category_priorities": [],
+  "subcategory_priorities": [],
+  "frequency_priorities": [],
+  "source_priorities": [],
+  "hard_filter_rules": [
+    {
+      "field": "all_empty",
+      "operator": "eq",
+      "value": true,
+      "action": "EXCLUDE",
+      "reason": "删除全空列"
+    },
+    {
+      "field": "constant",
+      "operator": "eq",
+      "value": true,
+      "action": "EXCLUDE",
+      "reason": "删除恒定列"
+    },
+    {
+      "field": "missing_rate",
+      "operator": "gt",
+      "value": 0.9,
+      "action": "EXCLUDE",
+      "reason": "删除缺失率高于 90% 的变量"
+    },
+    {
+      "field": "missing_rate",
+      "operator": "gt",
+      "value": 0.5,
+      "action": "NEEDS_REVIEW",
+      "reason": "缺失率高于 50% 的变量进入复核"
+    },
+    {
+      "field": "date_parse_rate",
+      "operator": "lt",
+      "value": 0.1,
+      "action": "NEEDS_REVIEW",
+      "reason": "日期无法解析的变量进入复核"
+    }
+  ],
+  "sorting_rules": [],
+  "scoring_rules": [],
+  "deduplication_rules": [],
+  "exception_rules": [],
+  "conflict_resolution_rules": [],
+  "review_rules": [
+    {
+      "condition": {
+        "field": "category",
+        "operator": "eq",
+        "value": "UNCLASSIFIED"
+      },
+      "reason": "同类指标无法确认经济含义时进入复核"
+    }
+  ],
+  "unresolved_items": [],
+  "max_variable_count": null,
+  "metadata": {
+    "parser": "mock"
+  }
+}

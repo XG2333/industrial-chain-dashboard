@@ -1,0 +1,56 @@
+# Secrets
+.env
+.env.*
+!.env.example
+credentials.*
+secret*
+token*
+apikey*
+api_key*
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.pytest_tmp*/
+*.egg-info/
+.mypy_cache/
+.ruff_cache/
+
+# Codex local state
+.codex/
+
+# Runtime / business data
+artifacts/
+artifacts_reuse_ok/
+data/
+input/
+output/
+workspace/
+cache/
+tmp/
+temp/
+logs/
+*.log
+*.pid
+~$*
+
+# Data files
+*.xlsx
+*.xls
+*.csv
+*.parquet
+*.db
+*.sqlite
+*.sqlite3
+*.duckdb
+*.pkl
+*.pickle
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

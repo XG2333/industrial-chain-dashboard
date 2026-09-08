@@ -1,0 +1,13 @@
+pandas
+numpy
+pydantic
+pydantic-settings
+python-dotenv
+requests
+curl_cffi
+fastapi
+uvicorn
+PyYAML
+openpyxl
+pytest
+akshare  # optional: exchange member/institution + tin warehouse (real-time public data); first install is slow

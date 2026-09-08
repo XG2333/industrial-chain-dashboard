@@ -1,0 +1,980 @@
+{
+  "version": 1,
+  "sectors": {
+    "锂矿": {
+      "nodes": [
+        {
+          "node_id": "lithium_resource",
+          "node_name": "lithium_resource",
+          "node_rank": 1,
+          "relation_type": "peer",
+          "include": ["储量", "自给率"],
+          "sub": ["自给率", "储量"]
+        },
+        {
+          "node_id": "lithium_mining",
+          "node_name": "lithium_mining",
+          "node_rank": 2,
+          "relation_type": "process",
+          "include": ["原矿", "开采", "产量", "开工", "排产", "供应量"],
+          "major": ["供给"]
+        },
+        {
+          "node_id": "lithium_mineral",
+          "node_name": "lithium_mineral",
+          "node_rank": 3,
+          "relation_type": "parallel",
+          "include": ["锂辉石", "锂云母", "磷锂铝石"],
+          "exclude": ["精矿"]
+        },
+        {
+          "node_id": "concentrate_trade",
+          "node_name": "concentrate_trade",
+          "node_rank": 3,
+          "node_priority": 4,
+          "relation_type": "process",
+          "include": ["精矿", "进口", "出口", "库存", "发货量", "航运", "出港", "到港"],
+          "exclude": ["产量", "开工", "排产", "原矿"],
+          "major": ["价格", "进出口", "库存", "供给"]
+        },
+        {
+          "node_id": "ore_balance",
+          "node_name": "ore_balance",
+          "node_rank": 4,
+          "node_priority": 5,
+          "relation_type": "peer",
+          "include": ["平衡"]
+        }
+      ]
+    },
+    "碳酸锂": {
+      "nodes": [
+        {
+          "node_name": "production_cost",
+          "node_rank": 1,
+          "include": ["成本", "利润", "产量", "开工", "产能", "排产", "冶炼", "加工费"],
+          "major": ["成本利润", "供给"]
+        },
+        {
+          "node_name": "product_price",
+          "node_rank": 2,
+          "include": ["现货", "期货", "基差", "月差", "价差", "升贴水", "收盘价", "均价", "成交量", "持仓", "成交持仓比"],
+          "major": ["价格"]
+        },
+        {
+          "node_name": "inventory_trade",
+          "node_rank": 3,
+          "include": ["库存", "仓单", "进口", "出口", "净出口"],
+          "major": ["库存", "进出口"]
+        },
+        {
+          "node_name": "balance",
+          "node_rank": 4,
+          "include": ["平衡"]
+        }
+      ]
+    },
+    "氢氧化锂": {
+      "nodes": [
+        {
+          "node_name": "production",
+          "node_rank": 1,
+          "include": ["产量", "产能", "开工", "排产"],
+          "major": ["供给"]
+        },
+        {
+          "node_name": "price",
+          "node_rank": 2,
+          "include": ["价格", "现货", "价差", "均价"],
+          "major": ["价格"]
+        },
+        {
+          "node_id": "hydroxide_cost",
+          "node_name": "hydroxide_cost",
+          "node_rank": 3,
+          "display_name": "氢氧化锂成本利润",
+          "business_role": "氢氧化锂成本利润",
+          "include": ["成本", "利润", "加工费"],
+          "major": ["成本利润", "供给"]
+        },
+        {
+          "node_name": "trade_inventory",
+          "node_rank": 4,
+          "include": ["库存", "进口", "出口", "净出口"],
+          "major": ["库存", "进出口"]
+        },
+        {
+          "node_name": "balance",
+          "node_rank": 5,
+          "include": ["平衡"]
+        }
+      ]
+    },
+    "其他锂盐": {
+      "nodes": [
+        {
+          "node_id": "base_lithium_salts",
+          "node_name": "base_lithium_salts",
+          "node_rank": 1,
+          "display_name": "金属锂/锂盐基础产品",
+          "stage_label": "锂产业中间产品",
+          "business_role": "金属锂产品",
+          "include": ["氯化锂", "氟化锂", "金属锂", "溴化锂", "硫酸锂", "硝酸锂", "硫化锂"],
+          "major": ["价格", "供给", "成本利润", "库存"]
+        },
+        {
+          "node_id": "battery_auxiliaries",
+          "node_name": "battery_auxiliaries",
+          "node_rank": 2,
+          "display_name": "CMC/SBR/NMP等电池辅材",
+          "stage_label": "电池材料辅材",
+          "business_role": "电池辅材产品",
+          "include": ["NMP", "CMC", "SBR", "导电剂", "粘结剂"]
+        },
+        {
+          "node_name": "trade",
+          "node_rank": 3,
+          "include": ["进口", "出口", "净出口", "产能", "产量", "开工"],
+          "major": ["进出口", "供给"],
+          "sub": ["进口", "出口", "净出口"]
+        }
+      ]
+    },
+    "三元正极": {
+      "nodes": [
+        {
+          "node_name": "precursor",
+          "node_rank": 1,
+          "include": ["前驱体"]
+        },
+        {
+          "node_name": "cathode_material",
+          "node_rank": 2,
+          "include": ["三元材料", "NCA", "正极材料", "加工费", "产能", "产量", "开工"],
+          "major": ["价格", "供给", "成本利润"]
+        },
+        {
+          "node_name": "trade_inventory",
+          "node_rank": 3,
+          "include": ["库存", "进口", "出口", "净出口"],
+          "major": ["库存", "进出口"]
+        }
+      ]
+    },
+    "磷酸铁锂": {
+      "nodes": [
+        {
+          "node_id": "phosphorus_source",
+          "node_name": "phosphorus_source",
+          "node_rank": 1,
+          "stage": "upstream",
+          "branch": "phosphorus",
+          "branch_priority": 1,
+          "node_priority": 1,
+          "relation_type": "parallel_input",
+          "upstream_of": ["iron_phosphate"],
+          "downstream_of": null,
+          "display_name": "磷源原料",
+          "business_role": "磷源原料",
+          "include": ["磷矿石", "磷酸一铵", "热法磷酸", "磷酸", "黄磷", "硫磺"],
+          "exclude": ["磷酸铁", "磷酸铁锂"]
+        },
+        {
+          "node_id": "iron_source",
+          "node_name": "iron_source",
+          "node_rank": 1,
+          "stage": "upstream",
+          "branch": "iron",
+          "branch_priority": 2,
+          "node_priority": 1,
+          "relation_type": "parallel_input",
+          "upstream_of": ["iron_phosphate"],
+          "downstream_of": null,
+          "display_name": "铁源原料",
+          "business_role": "铁源原料",
+          "include": ["硫酸亚铁", "氧化铁红", "氧化铁", "铁粉", "草酸亚铁", "铁块"]
+        },
+        {
+          "node_id": "iron_phosphate",
+          "node_name": "iron_phosphate",
+          "node_rank": 2,
+          "stage": "midstream",
+          "branch": "lfp_chain",
+          "branch_priority": 1,
+          "node_priority": 2,
+          "relation_type": "strict",
+          "upstream_of": ["lfp_cathode"],
+          "downstream_of": ["phosphorus_source", "iron_source"],
+          "include": ["磷酸铁"],
+          "exclude": ["磷酸铁锂"]
+        },
+        {
+          "node_id": "lfp_cathode",
+          "node_name": "lfp_cathode",
+          "node_rank": 3,
+          "stage": "downstream",
+          "branch": "lfp_chain",
+          "branch_priority": 1,
+          "node_priority": 3,
+          "relation_type": "strict",
+          "upstream_of": null,
+          "downstream_of": ["iron_phosphate"],
+          "include": ["磷酸铁锂", "成本", "利润", "产能", "产量", "开工", "加工费", "PVDF"],
+          "major": ["价格", "成本利润", "供给"]
+        },
+        {
+          "node_id": "lfp_trade",
+          "node_name": "trade_inventory",
+          "node_rank": 4,
+          "stage": "trade",
+          "branch": "lfp_trade",
+          "branch_priority": 2,
+          "node_priority": 4,
+          "relation_type": "strict",
+          "upstream_of": null,
+          "downstream_of": ["lfp_cathode"],
+          "include": ["库存", "进口", "出口", "净出口"],
+          "major": ["库存", "进出口"]
+        },
+        {
+          "node_id": "lfp_additive",
+          "node_name": "lfp_additive",
+          "node_rank": 5,
+          "stage": "midstream",
+          "branch": "lfp_chain",
+          "branch_priority": 3,
+          "node_priority": 5,
+          "relation_type": "peer",
+          "display_name": "磷酸铁锂添加剂/辅料",
+          "business_role": "磷酸铁锂辅料",
+          "include": ["一水葡萄糖", "聚乙二醇", "PEG"]
+        }
+      ]
+    },
+    "钴酸锂": {
+      "nodes": [
+        {
+          "node_name": "production",
+          "node_rank": 1,
+          "include": ["产能", "产量", "开工"]
+        },
+        {
+          "node_name": "price",
+          "node_rank": 2,
+          "include": ["价格", "平均价", "现货"],
+          "major": ["价格"]
+        },
+        {
+          "node_name": "inventory_trade",
+          "node_rank": 3,
+          "include": ["库存", "进口", "出口"]
+        }
+      ]
+    },
+    "锰酸锂": {
+      "nodes": [
+        {
+          "node_name": "production",
+          "node_rank": 1,
+          "include": ["产能", "产量", "开工"]
+        },
+        {
+          "node_name": "price",
+          "node_rank": 2,
+          "include": ["价格", "平均价", "现货"],
+          "major": ["价格"]
+        },
+        {
+          "node_name": "trade_inventory",
+          "node_rank": 3,
+          "include": ["库存", "进口", "出口"]
+        }
+      ]
+    },
+    "负极材料": {
+      "nodes": [
+        {
+          "node_id": "flake_graphite",
+          "node_name": "flake_graphite",
+          "node_rank": 1,
+          "stage": "raw",
+          "branch": "natural",
+          "branch_priority": 1,
+          "node_priority": 1,
+          "relation_type": "process",
+          "upstream_of": ["spherical_graphite"],
+          "downstream_of": null,
+          "display_name": "天然鳞片石墨",
+          "include": ["鳞片石墨"]
+        },
+        {
+          "node_id": "spherical_graphite",
+          "node_name": "spherical_graphite",
+          "node_rank": 2,
+          "stage": "process",
+          "branch": "natural",
+          "branch_priority": 1,
+          "node_priority": 2,
+          "relation_type": "process",
+          "upstream_of": ["natural_anode"],
+          "downstream_of": ["flake_graphite"],
+          "display_name": "球形石墨",
+          "include": ["球形石墨"]
+        },
+        {
+          "node_id": "natural_anode",
+          "node_name": "natural_anode",
+          "node_rank": 3,
+          "stage": "product",
+          "branch": "natural",
+          "branch_priority": 1,
+          "node_priority": 3,
+          "relation_type": "process",
+          "upstream_of": null,
+          "downstream_of": ["spherical_graphite"],
+          "display_name": "天然石墨负极",
+          "include": ["天然石墨"]
+        },
+        {
+          "node_id": "coke_raw",
+          "node_name": "coke_raw",
+          "node_rank": 1,
+          "stage": "raw",
+          "branch": "artificial",
+          "branch_priority": 2,
+          "node_priority": 1,
+          "relation_type": "process",
+          "upstream_of": ["graphitization"],
+          "downstream_of": null,
+          "display_name": "人造石墨原料（石油焦/针状焦）",
+          "include": ["石油焦", "针状焦", "焦炭", "低硫焦"]
+        },
+        {
+          "node_id": "graphitization",
+          "node_name": "graphitization",
+          "node_rank": 2,
+          "stage": "process",
+          "branch": "artificial",
+          "branch_priority": 2,
+          "node_priority": 2,
+          "relation_type": "process",
+          "upstream_of": ["anode_product"],
+          "downstream_of": ["coke_raw"],
+          "display_name": "石墨化加工",
+          "include": ["石墨化"]
+        },
+        {
+          "node_id": "anode_product",
+          "node_name": "anode_product",
+          "node_rank": 3,
+          "stage": "product",
+          "branch": "artificial",
+          "branch_priority": 2,
+          "node_priority": 3,
+          "relation_type": "process",
+          "upstream_of": null,
+          "downstream_of": ["graphitization"],
+          "display_name": "人造石墨负极",
+          "include": ["人造石墨", "硅碳", "硅氧"]
+        },
+        {
+          "node_id": "anode_supply_demand",
+          "node_name": "supply_demand",
+          "node_rank": 4,
+          "stage": "supply_demand",
+          "branch": "trade",
+          "branch_priority": 3,
+          "node_priority": 4,
+          "relation_type": "peer",
+          "upstream_of": null,
+          "downstream_of": null,
+          "include": ["成本", "利润", "产能", "产量", "出货", "集中度", "开工", "CR5"],
+          "major": ["成本利润", "供给", "需求"]
+        },
+        {
+          "node_id": "anode_inventory",
+          "node_name": "anode_inventory",
+          "node_rank": 5,
+          "stage": "trade",
+          "branch": "inventory",
+          "branch_priority": 4,
+          "node_priority": 5,
+          "relation_type": "peer",
+          "display_name": "负极材料库存",
+          "business_role": "负极材料库存",
+          "include": ["库存", "库存周期"],
+          "major": ["库存"]
+        }
+      ]
+    },
+    "隔膜": {
+      "nodes": [
+        {
+          "node_name": "base_film",
+          "node_rank": 1,
+          "include": ["基膜"],
+          "exclude": ["涂覆", "陶瓷"]
+        },
+        {
+          "node_name": "coated_film",
+          "node_rank": 2,
+          "include": ["涂覆", "陶瓷"]
+        },
+        {
+          "node_name": "supply_trade",
+          "node_rank": 3,
+          "include": ["产能", "产量", "开工", "库存", "进口", "出口"],
+          "major": ["供给", "库存", "进出口"]
+        }
+      ]
+    },
+    "电解液产业链": {
+      "nodes": [
+        {
+          "node_id": "electrolyte_salt",
+          "node_name": "electrolyte_salt",
+          "node_rank": 1,
+          "display_name": "电解质锂盐",
+          "stage_label": "液态电解液原料",
+          "business_role": "电解质锂盐",
+          "branch": "liquid",
+          "branch_priority": 1,
+          "node_priority": 1,
+          "relation_type": "parallel_input",
+          "include": ["六氟磷酸锂", "LiFSI", "双氟", "溴化锂", "氯化锂", "氟化锂", "五氯化磷", "五硫化二磷"]
+        },
+        {
+          "node_id": "electrolyte_solvent",
+          "node_name": "electrolyte_solvent",
+          "node_rank": 1,
+          "display_name": "电解液溶剂",
+          "stage_label": "液态电解液原料",
+          "business_role": "电解液溶剂",
+          "branch": "liquid",
+          "branch_priority": 1,
+          "node_priority": 1,
+          "relation_type": "parallel_input",
+          "include": ["EC", "PC", "DMC", "DEC", "EMC", "溶剂"],
+          "exclude": ["FEC"]
+        },
+        {
+          "node_id": "electrolyte_additive",
+          "node_name": "electrolyte_additive",
+          "node_rank": 1,
+          "display_name": "电解液添加剂",
+          "stage_label": "液态电解液原料",
+          "business_role": "电解液添加剂",
+          "branch": "liquid",
+          "branch_priority": 1,
+          "node_priority": 1,
+          "relation_type": "parallel_input",
+          "include": ["VC", "FEC", "添加剂", "LiODFB", "LiBOB", "DTD", "双草酸硼酸锂", "二氟草酸硼酸锂", "硫酸乙烯酯"]
+        },
+        {
+          "node_id": "electrolyte_product",
+          "node_name": "electrolyte_product",
+          "node_rank": 2,
+          "display_name": "电解液成品",
+          "stage_label": "液态电解液成品",
+          "business_role": "电解液成品",
+          "branch": "liquid",
+          "branch_priority": 1,
+          "node_priority": 2,
+          "relation_type": "product",
+          "include": ["电解液"]
+        },
+        {
+          "node_id": "solid_electrolyte",
+          "node_name": "solid_electrolyte",
+          "node_rank": 1,
+          "display_name": "固态电解质",
+          "stage_label": "固态电解质体系",
+          "business_role": "固态电解质",
+          "branch": "solid",
+          "branch_priority": 2,
+          "node_priority": 1,
+          "relation_type": "parallel",
+          "include": ["LPSC", "LATP", "LLZO", "固态电解质", "硫化物电解质", "氧化物电解质"]
+        },
+        {
+          "node_name": "supply_trade",
+          "node_rank": 3,
+          "node_priority": 3,
+          "relation_type": "peer",
+          "include": ["产能", "产量", "开工", "库存", "进口", "出口", "成本", "利润"],
+          "major": ["供给", "库存", "进出口", "成本利润"]
+        }
+      ]
+    },
+    "辅材": {
+      "nodes": [
+        {
+          "node_name": "copper_aluminum_foil",
+          "node_rank": 1,
+          "include": ["铜箔", "铝箔", "A00铝", "铝锭", "电解铝"]
+        },
+        {
+          "node_name": "pvdf",
+          "node_rank": 2,
+          "include": ["PVDF"]
+        }
+      ]
+    },
+    "电池电芯": {
+      "nodes": [
+        {
+          "node_id": "cell_cost",
+          "node_name": "cell_cost",
+          "node_rank": 1,
+          "relation_type": "process",
+          "display_name": "电芯成本",
+          "include": ["成本", "成本占比"]
+        },
+        {
+          "node_id": "cell_price",
+          "node_name": "cell_price",
+          "node_rank": 2,
+          "relation_type": "product",
+          "display_name": "电芯产品",
+          "include": ["电芯", "价格", "平均价"],
+          "exclude": ["Pack", "电池组"],
+          "major": ["价格"]
+        },
+        {
+          "node_id": "pack_price",
+          "node_name": "pack_price",
+          "node_rank": 3,
+          "relation_type": "process",
+          "display_name": "Pack/电池组",
+          "include": ["Pack", "电池组", "电池包"]
+        },
+        {
+          "node_id": "supply_output",
+          "node_name": "supply_output",
+          "node_rank": 3,
+          "node_priority": 4,
+          "relation_type": "peer",
+          "include": ["产能", "产量", "出货", "开工"],
+          "major": ["供给", "需求"]
+        },
+        {
+          "node_id": "inventory_trade",
+          "node_name": "inventory_trade",
+          "node_rank": 4,
+          "node_priority": 5,
+          "relation_type": "peer",
+          "include": ["库存", "进口", "出口", "净出口"],
+          "major": ["库存", "进出口"]
+        }
+      ]
+    },
+    "储能": {
+      "nodes": [
+        {
+          "node_name": "storage_battery_system",
+          "node_rank": 1,
+          "include": ["储能电池", "储能系统", "预制舱", "储能舱", "储能电芯", "系统集成", "直流侧"],
+          "major": ["供给", "成本利润"]
+        },
+        {
+          "node_id": "storage_price",
+          "node_name": "storage_price",
+          "node_rank": 2,
+          "display_name": "储能系统价格",
+          "business_role": "储能系统价格",
+          "include": ["价格", "均价", "平均价", "中标", "现货", "报价", "价差"],
+          "major": ["价格"]
+        },
+        {
+          "node_name": "demand_install",
+          "node_rank": 3,
+          "include": ["需求量", "装机", "工商业储能", "建成规模"]
+        },
+        {
+          "node_name": "policy_bidding",
+          "node_rank": 4,
+          "include": ["配储", "要求", "招标", "中标"]
+        },
+        {
+          "node_name": "inventory_trade",
+          "node_rank": 4,
+          "include": ["库存", "进口", "出口", "净出口"],
+          "major": ["库存", "进出口"]
+        }
+      ]
+    },
+    "新能源汽车": {
+      "nodes": [
+        {
+          "node_name": "vehicle_production",
+          "node_rank": 1,
+          "include": ["产量"],
+          "major": ["供给"]
+        },
+        {
+          "node_name": "sales_ownership",
+          "node_rank": 2,
+          "include": ["销量", "上险", "保有量", "经销商库存", "批发", "零售", "出口", "进口"],
+          "exclude": ["充电桩", "换电", "渗透率"]
+        },
+        {
+          "node_name": "ev_penetration",
+          "node_rank": 3,
+          "include": ["渗透率", "带电量", "装机", "充电", "换电"]
+        }
+      ]
+    },
+    "磷化工链": {
+      "nodes": [
+        {
+          "node_id": "phosphate_rock",
+          "node_name": "phosphate_rock",
+          "node_rank": 1,
+          "stage": "upstream",
+          "branch": "phosphate_chain",
+          "branch_priority": 1,
+          "node_priority": 1,
+          "relation_type": "strict",
+          "upstream_of": ["phosphoric_acid_products"],
+          "downstream_of": null,
+          "include": ["磷矿石", "磷矿"]
+        },
+        {
+          "node_id": "phosphoric_acid_products",
+          "node_name": "phosphoric_acid_products",
+          "node_rank": 2,
+          "stage": "midstream",
+          "branch": "phosphate_chain",
+          "branch_priority": 1,
+          "node_priority": 2,
+          "relation_type": "strict",
+          "upstream_of": ["trade_demand"],
+          "downstream_of": ["phosphate_rock"],
+          "include": ["磷酸一铵", "磷酸", "磷酸盐", "黄磷"],
+          "exclude": ["磷酸铁锂"]
+        },
+        {
+          "node_id": "trade_demand",
+          "node_name": "trade_demand",
+          "node_rank": 3,
+          "stage": "downstream",
+          "branch": "phosphate_chain",
+          "branch_priority": 1,
+          "node_priority": 3,
+          "relation_type": "strict",
+          "upstream_of": null,
+          "downstream_of": ["phosphoric_acid_products"],
+          "include": ["进口", "出口", "消耗量", "需求", "库存", "产能", "产量"],
+          "major": ["进出口", "需求", "库存", "供给"]
+        }
+      ]
+    },
+    "锡矿": {
+      "nodes": [
+        {
+          "node_name": "resource",
+          "node_rank": 1,
+          "include": ["储量"]
+        },
+        {
+          "node_name": "mining",
+          "node_rank": 2,
+          "include": ["产量", "开工", "加工费"],
+          "major": ["供给"]
+        },
+        {
+          "node_name": "trade_inventory",
+          "node_rank": 3,
+          "include": ["进口", "出口", "净出口", "库存", "价格", "均价", "现货"],
+          "major": ["进出口", "库存", "价格"]
+        },
+        {
+          "node_name": "balance",
+          "node_rank": 4,
+          "include": ["平衡"]
+        }
+      ]
+    },
+    "锡锭": {
+      "nodes": [
+        {
+          "node_name": "production",
+          "node_rank": 1,
+          "include": ["产量", "产能", "开工", "冶炼"],
+          "major": ["供给"]
+        },
+        {
+          "node_name": "price",
+          "node_rank": 2,
+          "include": ["价格", "现货", "升贴水", "溢价"],
+          "major": ["价格"]
+        },
+        {
+          "node_name": "inventory_trade",
+          "node_rank": 3,
+          "include": ["库存", "仓单", "进口", "出口", "净出口"],
+          "major": ["库存", "进出口"]
+        }
+      ]
+    },
+    "锡材": {
+      "nodes": [
+        {
+          "node_name": "product",
+          "node_rank": 1,
+          "include": ["焊", "锡条", "锡丝", "锡粉", "锡合金"]
+        },
+        {
+          "node_name": "processing",
+          "node_rank": 2,
+          "include": ["加工费"]
+        },
+        {
+          "node_name": "trade",
+          "node_rank": 3,
+          "include": ["进口", "出口", "净出口", "库存"]
+        }
+      ]
+    },
+    "锡期货": {
+      "nodes": [
+        {
+          "node_name": "futures_price",
+          "node_rank": 1,
+          "include": ["收盘价", "期货"]
+        },
+        {
+          "node_name": "basis",
+          "node_rank": 2,
+          "include": ["基差", "期现"]
+        },
+        {
+          "node_name": "month_spread",
+          "node_rank": 3,
+          "include": ["月差"]
+        }
+      ]
+    },
+    "铅蓄电池": {
+      "nodes": [
+        {
+          "node_name": "production",
+          "node_rank": 1,
+          "include": ["开工", "产量", "产能"]
+        },
+        {
+          "node_name": "price",
+          "node_rank": 2,
+          "include": ["价格", "现货"]
+        },
+        {
+          "node_name": "trade_inventory",
+          "node_rank": 3,
+          "include": ["进口", "出口", "净出口", "库存", "销量"]
+        }
+      ]
+    },
+    "镀锡板": {
+      "nodes": [
+        {
+          "node_name": "production",
+          "node_rank": 1,
+          "include": ["产能", "产量"]
+        },
+        {
+          "node_name": "sales_inventory",
+          "node_rank": 2,
+          "include": ["销量", "库存"]
+        },
+        {
+          "node_name": "trade",
+          "node_rank": 3,
+          "include": ["进口", "出口", "净出口"]
+        }
+      ]
+    },
+    "硅石石英砂": {
+      "nodes": [
+        {
+          "node_name": "silica_raw",
+          "node_rank": 1,
+          "include": ["硅石"],
+          "exclude": ["高纯", "石英坩埚"]
+        },
+        {
+          "node_name": "high_purity_quartz",
+          "node_rank": 2,
+          "include": ["高纯石英砂", "石英坩埚"]
+        }
+      ]
+    },
+    "硅基原料": {
+      "nodes": [
+        {
+          "node_name": "metal_silicon_powder",
+          "node_rank": 1,
+          "include": ["硅粉"]
+        },
+        {
+          "node_name": "trichlorosilane",
+          "node_rank": 2,
+          "include": ["三氯氢硅"]
+        }
+      ]
+    },
+    "工业硅": {
+      "nodes": [
+        {
+          "node_name": "production",
+          "node_rank": 1,
+          "include": ["产量", "产能", "开工", "排产"],
+          "major": ["供给"]
+        },
+        {
+          "node_name": "price_inventory",
+          "node_rank": 2,
+          "include": ["价格", "现货", "期货", "库存", "仓单", "基差", "月差", "成交"],
+          "major": ["价格", "库存"]
+        },
+        {
+          "node_name": "trade",
+          "node_rank": 3,
+          "include": ["进口", "出口", "净出口"],
+          "major": ["进出口"]
+        },
+        {
+          "node_name": "balance",
+          "node_rank": 4,
+          "include": ["平衡"]
+        }
+      ]
+    },
+    "多晶硅": {
+      "nodes": [
+        {
+          "node_name": "production",
+          "node_rank": 1,
+          "include": ["产量", "产能", "开工"],
+          "major": ["供给"]
+        },
+        {
+          "node_name": "price_futures",
+          "node_rank": 2,
+          "include": ["价格", "现货", "期货", "基差", "月差", "成交"],
+          "major": ["价格"]
+        },
+        {
+          "node_name": "inventory_balance",
+          "node_rank": 3,
+          "include": ["库存", "仓单", "平衡"],
+          "major": ["库存"]
+        },
+        {
+          "node_name": "trade",
+          "node_rank": 4,
+          "include": ["进口", "出口", "净出口"],
+          "major": ["进出口"]
+        }
+      ]
+    },
+    "有机硅": {
+      "nodes": [
+        {
+          "node_name": "production",
+          "node_rank": 1,
+          "include": ["单体", "DMC", "产能", "产量", "开工"],
+          "major": ["供给"]
+        },
+        {
+          "node_name": "price_balance",
+          "node_rank": 2,
+          "include": ["价格", "平衡", "均价"],
+          "major": ["价格"]
+        },
+        {
+          "node_name": "trade",
+          "node_rank": 3,
+          "include": ["进口", "出口", "净出口"],
+          "major": ["进出口"]
+        }
+      ]
+    },
+    "硅片": {
+      "nodes": [
+        {
+          "node_name": "ingot_casting",
+          "node_rank": 1,
+          "include": ["拉棒", "铸锭"]
+        },
+        {
+          "node_name": "slicing",
+          "node_rank": 2,
+          "include": ["切片"]
+        },
+        {
+          "node_name": "wafer_supply",
+          "node_rank": 3,
+          "include": ["硅片", "价格", "供需", "库存", "产量", "产能", "进口", "出口"],
+          "major": ["价格", "供给", "库存", "进出口"]
+        }
+      ]
+    },
+    "电池片": {
+      "nodes": [
+        {
+          "node_name": "production",
+          "node_rank": 1,
+          "include": ["产量", "产能", "开工", "效率", "技术占比", "份额", "参数"],
+          "major": ["供给", "其他"]
+        },
+        {
+          "node_name": "price_cost",
+          "node_rank": 2,
+          "include": ["价格", "成本", "利润"],
+          "major": ["价格", "成本利润"]
+        },
+        {
+          "node_name": "trade",
+          "node_rank": 3,
+          "include": ["出口", "进口"],
+          "major": ["进出口"]
+        }
+      ]
+    },
+    "组件": {
+      "nodes": [
+        {
+          "node_name": "cost_bom",
+          "node_rank": 1,
+          "include": ["成本"]
+        },
+        {
+          "node_name": "product",
+          "node_rank": 2,
+          "include": ["组件", "价格", "产量", "产能", "效率", "开工"],
+          "major": ["价格", "供给", "其他"]
+        },
+        {
+          "node_name": "trade",
+          "node_rank": 3,
+          "include": ["出口", "进口", "库存", "净出口"],
+          "major": ["进出口", "库存"]
+        }
+      ]
+    },
+    "下游需求": {
+      "nodes": [
+        {
+          "node_name": "install_demand",
+          "node_rank": 1,
+          "include": ["装机"]
+        },
+        {
+          "node_name": "power_consumption",
+          "node_rank": 2,
+          "include": ["发电量", "消费量", "需求量"]
+        }
+      ]
+    }
+  }
+}

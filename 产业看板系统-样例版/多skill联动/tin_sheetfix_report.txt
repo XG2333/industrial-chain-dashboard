@@ -1,0 +1,7 @@
+锡指标目录 Sheet Name 修复报告 锡产业链数据_workflow_ai.xlsx
+备份: 锡产业链数据_workflow_ai_backup_fix_tin_catalog_sheets.xlsx
+指标行填表: 1040 | 多候选需人工: 4 | 未找到: 0 | 引用行跳过: 0
+自检: FAIL x4
+错位/变更行数: 0
+
+=== 错位行清单 (row | 原分组 -> 真实sheet | 指标) ===

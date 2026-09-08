@@ -1,0 +1,3 @@
+Classify the following variable batch using the provided schema.
+
+{variable_batch_json}

@@ -1,0 +1,15 @@
+[project]
+name = "multi-skill-workflow"
+version = "0.1.0"
+description = "Orchestrator that chains existing Excel curation skills into one workflow."
+requires-python = ">=3.12"
+dependencies = [
+    "pyyaml>=6.0",
+    "openpyxl>=3.1",
+    "pandas>=2.0",
+    "pytest>=8",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

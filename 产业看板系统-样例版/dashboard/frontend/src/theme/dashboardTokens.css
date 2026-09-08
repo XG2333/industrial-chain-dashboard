@@ -1,0 +1,29 @@
+:root {
+  --dashboard-bg: #ffffff;
+  --dashboard-surface: #ffffff;
+  --dashboard-surface-secondary: #f1f5f9;
+  --dashboard-border: #e2e8f0;
+  --dashboard-text-primary: #0f172a;
+  --dashboard-text-secondary: #64748b;
+  --dashboard-primary: #1a56db;
+  --dashboard-secondary: #f1f5f9;
+  --dashboard-positive: #dc2626;
+  --dashboard-negative: #16a34a;
+  --dashboard-warning: #d97706;
+  --dashboard-info: #0e7490;
+}
+
+.dark {
+  --dashboard-bg: #0f172a;
+  --dashboard-surface: #1e293b;
+  --dashboard-surface-secondary: #334155;
+  --dashboard-border: #334155;
+  --dashboard-text-primary: #f8fafc;
+  --dashboard-text-secondary: #94a3b8;
+  --dashboard-primary: #3f83f8;
+  --dashboard-secondary: #1e293b;
+  --dashboard-positive: #ef4444;
+  --dashboard-negative: #22c55e;
+  --dashboard-warning: #f59e0b;
+  --dashboard-info: #22d3ee;
+}

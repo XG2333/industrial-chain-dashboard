@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* shadcn/ui 官方 token 体系（OKLCH 分量格式，配合 Tailwind v3 <alpha-value> 支持透明度修饰：
+   值不带 oklch() 包装与内置 alpha，由 tailwind.config 用 oklch(var(--x) / <alpha-value>) 组合，
+   否则 bg-primary/70 等类会生成无效 CSS 而透明） */
+:root {
+  --background: 1 0 0;
+  --foreground: 0.145 0 0;
+  --card: 1 0 0;
+  --card-foreground: 0.145 0 0;
+  --popover: 1 0 0;
+  --popover-foreground: 0.145 0 0;
+  --primary: 0.205 0 0;
+  --primary-foreground: 0.985 0 0;
+  --secondary: 0.97 0 0;
+  --secondary-foreground: 0.205 0 0;
+  --muted: 0.97 0 0;
+  --muted-foreground: 0.556 0 0;
+  --accent: 0.97 0 0;
+  --accent-foreground: 0.205 0 0;
+  --destructive: 0.577 0.245 27.325;
+  --destructive-foreground: 0.985 0 0;
+  --border: 0.922 0 0;
+  --input: 0.922 0 0;
+  --ring: 0.708 0 0;
+  /* shadcn chart 色板（浅色） */
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --chart-6: oklch(0.548 0.214 292.6);
+  --chart-7: oklch(0.546 0.245 262.9);
+  --chart-8: oklch(0.627 0.194 149.2);
+}
+
+.dark {
+  --background: 0.145 0 0;
+  --foreground: 0.985 0 0;
+  --card: 0.205 0 0;
+  --card-foreground: 0.985 0 0;
+  --popover: 0.205 0 0;
+  --popover-foreground: 0.985 0 0;
+  --primary: 0.922 0 0;
+  --primary-foreground: 0.205 0 0;
+  --secondary: 0.269 0 0;
+  --secondary-foreground: 0.985 0 0;
+  --muted: 0.269 0 0;
+  --muted-foreground: 0.708 0 0;
+  --accent: 0.269 0 0;
+  --accent-foreground: 0.985 0 0;
+  --destructive: 0.704 0.191 22.216;
+  --destructive-foreground: 0.985 0 0;
+  --border: 0.269 0 0;
+  --input: 0.269 0 0;
+  --ring: 0.556 0 0;
+  /* shadcn chart 色板（深色） */
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --chart-6: oklch(0.68 0.15 252);
+  --chart-7: oklch(0.828 0.189 84.429);
+  --chart-8: oklch(0.769 0.188 70.08);
+}
+
+body {
+  background-color: oklch(var(--background));
+  color: oklch(var(--foreground));
+}
+
+/* ── 完整页面导出 PDF(?export=1 + 浏览器打印) ──
+   1) @page 纸张宽度对齐屏幕(~1400px): 打印页按屏幕宽度排布,
+      lg/xl 响应式网格(如 板块简评|评分维度 两列)不再塌成单列, 所见即所得;
+   2) 隐藏 fixed 悬浮层(索引栏等)与操作按钮;
+   3) 内部滚动容器(max-h + overflow)展开为完整流式内容;
+   4) 图表容器避免被分页线从中间切断; 骨架屏动画关停。 */
+@page {
+  size: 1400px 1000px;
+  margin: 0;
+}
+@media print {
+  /* 断点网格兜底: 打印视口按纸张宽度(≤794px)导致 md/lg/xl 断点失效、多列塌成单列,
+     这里直接强制保持屏幕上的列数(与 ?export=1 全量渲染配合, 排版与屏幕一致) */
+  .md\:grid-cols-2,
+  .lg\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .lg\:grid-cols-3,
+  .xl\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+  .lg\:grid-cols-4,
+  .xl\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+  .lg\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  }
+  .fixed {
+    display: none !important;
+  }
+  button {
+    display: none !important;
+  }
+  [class*="overflow-y-auto"],
+  [class*="overflow-x-auto"] {
+    overflow: visible !important;
+  }
+  [class*="max-h-"] {
+    max-height: none !important;
+  }
+  div[style*="aspect-ratio"] {
+    break-inside: avoid;
+  }
+  .animate-pulse {
+    animation: none !important;
+  }
+  .print-hide {
+    display: none !important;
+  }
+}
+
+.chart-flash {
+  animation: chart-flash 0.8s ease-in-out infinite;
+}
+
+@keyframes chart-flash {
+  0%,
+  100% {
+    border-color: #ef4444;
+    border-width: 2px;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.35);
+  }
+  50% {
+    border-color: #b91c1c;
+    border-width: 3px;
+    box-shadow: 0 0 0 4px rgba(185, 28, 28, 0.22);
+  }
+}

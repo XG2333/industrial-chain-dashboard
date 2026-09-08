@@ -1,0 +1,55 @@
+# Secrets
+.env
+.env.*
+!.env.example
+credentials.*
+secret*
+token*
+apikey*
+api_key*
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+# Test scratch dirs（pytest --basetemp 残留，可随时整目录删除）
+.pytest_tmp*
+pytest_tmp*/
+.tmp*/
+*.egg-info/
+
+# Runtime / business data
+data_input/
+input/
+output/
+workflow_runs/
+workspace/
+
+# Data files
+*.xlsx
+*.xls
+*.csv
+*.parquet
+*.db
+*.sqlite
+*.sqlite3
+*.duckdb
+*.pkl
+*.pickle
+
+# Runtime
+logs/
+*.log
+*.pid
+cache/
+tmp/
+temp/
+~$*
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

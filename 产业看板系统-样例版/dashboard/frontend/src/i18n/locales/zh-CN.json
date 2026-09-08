@@ -1,0 +1,17 @@
+﻿{
+  "app": {
+    "version": "0.1.0",
+    "name": "每日市场监测 AI 看板"
+  },
+  "layout": {
+    "overview": "行情总览",
+    "battery": "锂电板块",
+    "home": "主页",
+    "agent": "Agent",
+    "runtime": "运行",
+    "reports": "研报",
+    "settings": "设置",
+    "alphaZoo": "Alpha Zoo",
+    "correlation": "相关性"
+  }
+}

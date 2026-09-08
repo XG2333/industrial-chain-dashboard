@@ -1,0 +1,97 @@
+workflow:
+  name: silicon_chain_excel_catalog_to_financial_curation
+  project_root: C:/Users/11/Documents/Selecting skill
+  python: C:/Users/11/Documents/Selecting skill/.venv/Scripts/python.exe
+  provider: mock
+  rules: C:/Users/11/Documents/Selecting skill/input/selection_rules.docx
+  run_root: C:/Users/11/Documents/多skill联动/workflow_runs
+  final_output: C:/Users/11/Documents/多skill联动/output/<input_stem>_workflow.xlsx
+  steps:
+  - id: excel_catalog_curator
+    name: Excel完整指标目录生成（硅产业链）
+    runner: excel_catalog_curator
+    enabled: true
+    params:
+      script: C:/Users/11/Documents/多skill联动/scripts/silicon_catalog.py
+      output_name: cataloged.xlsx
+      pickle_name: dataset.pkl
+  - id: financial_variable_curation
+    name: 金融变量筛选与目录标记（硅产业链）
+    runner: financial_variable_directory_mark
+    enabled: true
+    params:
+      output_name: directory_marked.xlsx
+      database_name: curation.db
+      artifacts_dir: skill2_artifacts
+      timeout_ms: 1800000
+  - id: reclassify_silicon
+    name: 硅产业链分类复核
+    runner: command
+    enabled: true
+    in_place: true
+    params:
+      timeout_ms: 900000
+      command:
+      - C:/Users/11/Documents/Selecting skill/.venv/Scripts/python.exe
+      - C:/Users/11/Documents/多skill联动/scripts/reclassify_silicon.py
+      - --input
+      - '{input}'
+      - --output
+      - '{input}'
+      - --report
+      - '{run_dir}/silicon_classification_report.md'
+  - id: calculate_net_exports
+    name: 净出口与复合指标计算（合并链）
+    runner: command
+    enabled: true
+    in_place: true
+    params:
+      timeout_ms: 1800000
+      command:
+      - C:/Users/11/Documents/Selecting skill/.venv/Scripts/python.exe
+      - C:/Users/11/Documents/多skill联动/scripts/workflow_merged_stage.py
+      - --input
+      - '{input}'
+      - --output
+      - '{output}'
+      - --report
+      - '{run_dir}/composite_metric_report.json'
+  - id: apply_silicon_selection_rules
+    name: 硅指标确定性筛选
+    runner: command
+    enabled: true
+    in_place: true
+    params:
+      timeout_ms: 900000
+      command:
+      - C:/Users/11/Documents/Selecting skill/.venv/Scripts/python.exe
+      - C:/Users/11/Documents/多skill联动/scripts/apply_silicon_selection.py
+      - '{input}'
+  - id: generate_stock_targets
+    name: Skill3 个股标的生成
+    runner: stock_target_curator
+    enabled: true
+    in_place: true
+    params:
+      industry: silicon
+  - id: dashboard_data_sorter
+    name: Skill4 看板数据排序
+    runner: dashboard_data_sorter
+    enabled: true
+    in_place: true
+    params:
+      timeout_ms: 1800000
+  - id: check_silicon_output
+    name: 硅产业链分类筛选检查
+    runner: command
+    enabled: false
+    in_place: true
+    params:
+      timeout_ms: 600000
+      command:
+      - C:/Users/11/Documents/Selecting skill/.venv/Scripts/python.exe
+      - C:/Users/11/Documents/多skill联动/scripts/check_silicon_output.py
+      - --input
+      - '{input}'
+      - --report
+      - '{run_dir}/silicon_check_report.md'

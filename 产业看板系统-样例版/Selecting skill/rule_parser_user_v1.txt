@@ -1,0 +1,3 @@
+Parse the following rule text into the required structured schema.
+
+{rule_text}
