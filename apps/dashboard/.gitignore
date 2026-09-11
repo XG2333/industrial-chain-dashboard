@@ -1,0 +1,111 @@
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python cache
+**pycache**/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Python package build metadata
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Private local data-source configuration
+config/*.local.yaml
+
+# Private local input data
+data/raw/
+data/input/
+data/cache/
+*.xlsx
+*.xlsm
+*.xls
+*.xlsb
+
+# Test and analysis cache
+.pytest_cache/
+.pytest_tmp/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node modules and frontend build output
+node_modules/
+frontend/node_modules/
+*.log
+
+# Flowbite React generated class list
+.flowbite-react/class-list.json
+.flowbite-react/pid
+frontend/.flowbite-react/class-list.json
+frontend/.flowbite-react/pid
+
+# Local UI verification screenshots
+flowbite-overview-light.png
+flowbite-overview-dark.png
+flowbite-overview-mobile.png
+tin-full.png
+tin-canvas.png
+silicon-canvas.png
+battery-canvas.png
+tin-shell-canvas.png
+silicon-shell-canvas.png
+battery-shell-canvas.png
+tin-real-canvas.png
+silicon-real-canvas.png
+battery-real-canvas.png
+p3-*.png
+
+# IDE
+.idea/
+.vscode/
+
+# Operating system
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/*.log
+server.pid
+
+# Additional secrets
+credentials.*
+secret*
+token*
+apikey*
+api_key*
+
+# Business / generated data
+data/
+data/cache/
+*.pkl
+*.pickle
+*.parquet
+*.csv
+*.sqlite
+*.sqlite3
+*.duckdb
+锡核心指标.json
+~$*
+
+# Runtime
+tmp/
+temp/
+cache/
+server_test_marker.txt
+
+# Local databases
+data/*.db
+data/*.sqlite
+data/*.sqlite3

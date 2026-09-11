@@ -1,0 +1,56 @@
+workflow:
+  name: tin_chain_excel_catalog_to_financial_curation
+  project_root: "{selecting_skill_root}"
+  python: "{python}"
+  provider: mock
+  rules: "{selecting_skill_root}/input/selection_rules.docx"
+  run_root: "{workflow_runs_dir}"
+  final_output: "{processed_data_dir}/<input_stem>_workflow.xlsx"
+  steps:
+  - id: excel_catalog_curator
+    name: 锡产业链指标目录生成
+    runner: excel_catalog_curator
+    enabled: true
+    params:
+      script: "{pipeline_root}/scripts/tin_catalog.py"
+      output_name: cataloged.xlsx
+      pickle_name: dataset.pkl
+  - id: financial_variable_curation
+    name: 金融变量筛选与目录标记
+    runner: financial_variable_directory_mark
+    enabled: true
+    params:
+      output_name: directory_marked.xlsx
+      database_name: curation.db
+      artifacts_dir: skill2_artifacts
+      timeout_ms: 7200000
+  - id: calculate_net_exports
+    name: 净出口与复合指标计算（合并链）
+    runner: command
+    enabled: true
+    in_place: true
+    params:
+      timeout_ms: 1800000
+      command:
+      - '{python}'
+      - '{pipeline_root}/scripts/workflow_merged_stage.py'
+      - --input
+      - '{input}'
+      - --output
+      - '{output}'
+      - --report
+      - '{run_dir}/composite_metric_report.json'
+  - id: generate_stock_targets
+    name: Skill3 个股标的生成
+    runner: stock_target_curator
+    enabled: true
+    in_place: true
+    params:
+      industry: tin
+  - id: dashboard_data_sorter
+    name: Skill4 看板数据排序
+    runner: dashboard_data_sorter
+    enabled: true
+    in_place: true
+    params:
+      timeout_ms: 1800000

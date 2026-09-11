@@ -1,0 +1,41 @@
+{
+  "industries": {
+    "lithium": {"name": "锂电池产业链", "segments": ["锂矿锂盐", "正极材料", "负极材料", "电池&电芯"]},
+    "tin": {"name": "锡产业链", "segments": ["锡矿", "锡锭", "锡材", "锡下游"]},
+    "silicon": {"name": "硅产业链", "segments": ["工业硅", "有机硅", "多晶硅", "组件"]}
+  },
+  "requirements": {
+    "lithium": {"min_per_segment": 0, "max_per_segment": 20},
+    "tin": {"min_per_segment": 0, "max_per_segment": 12},
+    "silicon": {"min_per_segment": 0, "max_per_segment": 15}
+  },
+  "stocks": [
+    {
+      "industry": "lithium",
+      "segment": "电池&电芯",
+      "stage": "下游-电池电芯",
+      "code": "300750",
+      "market_cap": 0,
+      "name": "宁德时代",
+      "note": "公开演示条目，请按自己的公开数据源维护"
+    },
+    {
+      "industry": "tin",
+      "segment": "锡矿",
+      "stage": "上游-锡矿",
+      "code": "000960",
+      "market_cap": 0,
+      "name": "锡业股份",
+      "note": "公开演示条目，请按自己的公开数据源维护"
+    },
+    {
+      "industry": "silicon",
+      "segment": "工业硅",
+      "stage": "上游-工业硅",
+      "code": "603260",
+      "market_cap": 0,
+      "name": "合盛硅业",
+      "note": "公开演示条目，请按自己的公开数据源维护"
+    }
+  ]
+}

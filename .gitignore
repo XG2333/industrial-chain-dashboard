@@ -1,0 +1,59 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+*.pem
+*.key
+
+# Private or generated data
+data/raw/**
+data/processed/**
+data/stock-targets/**
+!data/README.md
+runtime/**
+!runtime/README.md
+artifacts/
+*.xlsx
+*.xls
+*.xlsm
+*.csv
+*.tsv
+*.parquet
+*.db
+*.sqlite
+*.sqlite3
+*.pkl
+*.pickle
+*.jsonl
+*.log
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+
+# Frontend
+node_modules/
+dist/
+dist-offline/
+.flowbite-react/
+coverage/
+
+# IDE / OS / temporary files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+~$*
+*.tmp
+*.bak
+*_backup*.xlsx

@@ -1,0 +1,16 @@
+pandas
+numpy
+pydantic
+pydantic-settings
+python-dotenv
+python-docx
+sqlalchemy
+openai
+requests
+curl_cffi
+fastapi
+uvicorn
+PyYAML
+openpyxl
+pytest
+akshare  # Optional live institution-position and tin-warehouse public data source.
