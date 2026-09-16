@@ -13,6 +13,75 @@
 - MCP：以 stdio 方式暴露同一组只读工具和行业规则资源；不会因导入包或启动 Dashboard 而自动启动。
 - 隐私：未加入 API Key、真实观测数据或私有运行产物；新增 `.env.example` 只包含占位配置。
 
+## 具体应用位置与工作流程
+
+新增能力集中在 `packages/industry-intelligence/src/industry_intelligence/`，与既有 `pipeline/`、`apps/dashboard/` 平行部署。它们之间的关系如下：
+
+```text
+规则文档 docs/ + pipeline/rules/
+              │
+              ▼
+       rag.py / chunking.py       ← 只读、可重复索引
+              │
+              ▼
+ vector_store.py（SQLite 默认 / Chroma 可选）
+              │
+       ┌──────┼─────────┐
+       ▼      ▼         ▼
+    RAG 检索  LangGraph  Function Tools
+                         │
+                    OpenAI Responses / MCP
+```
+
+### RAG 与向量库
+
+- `rag.py` 负责扫描批准的规则和说明文档，调用 `chunking.py` 切分文本，并将来源路径、行业、文档类型写入索引。
+- `embeddings.py` 默认使用离线确定性 Hash embedding，确保无外部网络也可运行；配置 OpenAI embedding 时才会产生外部调用。
+- `vector_store.py` 提供统一存储接口：小规模开源仓库使用 SQLite，较大语料可切换 Chroma。索引和审计数据位于 `runtime/intelligence/`，不进入 Git。
+- 该流程不读取原始观测数据，不改写 Excel，也不参与 SQL 计算；数值结果仍由原有 pipeline 负责。
+
+### Function Calling 工具层
+
+`domain_tools.py` 是唯一的领域工具注册入口，当前四个工具分别应用于：
+
+| 工具 | 作用 | 数据边界 |
+| --- | --- | --- |
+| `search_industry_knowledge` | 检索规则、口径和指标说明 | 仅已索引文档 |
+| `list_rule_documents` | 查看可用规则文档 | 仅批准目录 |
+| `get_indicator_catalog` | 读取处理后工作簿的指标目录 | 只读 catalog sheet，不读原始观察表 |
+| `get_pipeline_run_status` | 查看流水线运行摘要 | 只读运行元数据 |
+
+工具定义同时生成 OpenAI Responses API schema 和 MCP schema，因此两种调用方式共享同一套权限校验、参数校验和审计记录。没有任意 SQL、写文件、执行 Shell 或启动流水线的工具。
+
+### LangGraph
+
+`graph.py` 将研究型问答编排为三个旁路节点：
+
+1. `retrieve`：从 RAG 索引获取带来源的上下文；
+2. `tools`：仅执行调用方明确指定的只读工具；
+3. `synthesize`：将检索结果和工具结果汇总成可审阅文本。
+
+它用于规则解释、数据口径核查和运行状态复核，不替换 `pipeline/workflow/cli.py` 的 YAML 步骤执行器。
+
+### MCP
+
+`mcp_server.py` 将 `DomainToolRegistry` 以 stdio MCP 服务暴露给支持 MCP 的客户端，并额外提供 `industry://rules/{industry}` 规则资源。MCP 服务必须由操作者显式启动，不会在 Dashboard 或 Python 包导入时自动启动；因此不会改变现有前端请求路径。
+
+### OpenAI Function Calling
+
+`openai_agent.py` 是可选适配器，仅在总开关、工具调用开关和模型配置同时满足时运行 Responses API 工具循环。项目现有的 DeepSeek 调用和 Dashboard 接口保持原样，未被迁移或包裹。
+
+## 一次完整的旁路调用
+
+```text
+启用开关
+  → industry-intelligence index
+  → 用户问题进入 RAG 检索
+  → LangGraph 或 OpenAI/MCP 选择只读工具
+  → 返回带来源的规则解释/运行摘要
+  → 原有 Excel、SQL、FastAPI、React 输出不变
+```
+
 ## 兼容性与验证
 
 1. 新包无基础运行依赖；所有功能均要求总开关 `INDUSTRY_INTELLIGENCE_ENABLED=true` 和对应子开关。
