@@ -15,12 +15,24 @@ jobs:
           cache: pip
       - run: python -m pip install -r requirements.txt
       - run: python -m pip install -e packages/selecting-skill
+      - run: python -m pip install -e packages/industry-intelligence
       - shell: pwsh
         run: |
           $env:PYTHONPATH = "$PWD\pipeline"
-          python -m pytest packages/selecting-skill/tests pipeline/tests apps/dashboard/tests
+          python -m pytest packages/selecting-skill/tests packages/industry-intelligence/tests pipeline/tests apps/dashboard/tests
       - shell: pwsh
         run: ./scripts/prepublish_check.ps1
+
+  optional-intelligence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -e "packages/industry-intelligence[all,dev]"
+      - run: python -m pytest packages/industry-intelligence/tests
 
   frontend:
     runs-on: ubuntu-latest

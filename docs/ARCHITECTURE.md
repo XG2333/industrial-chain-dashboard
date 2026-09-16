@@ -34,6 +34,10 @@ The reusable classification and selection engine. It inspects Excel schemas, com
 
 The workbook `catalog_order` remains the canonical business ordering signal. Frontend grouping combines related charts such as import/export/net export and volume/open-interest/ratio while retaining that order between blocks.
 
+### `packages/industry-intelligence/` (optional sidecar)
+
+An opt-in intelligence boundary for RAG, vector retrieval, allow-listed read-only function tools, LangGraph research orchestration, and MCP exposure. No legacy pipeline runner, FastAPI route, or frontend component imports it. Feature flags default to disabled, generated indexes stay in `runtime/intelligence/`, and the deterministic workbook workflow remains authoritative.
+
 ## Data contracts
 
 The catalog includes source sheet, column, indicator name, frequency, unit, sector, major class, subclass, data nature, primary selection, tags, and secondary selection. New transformations should preserve existing worksheet formulas and data sheets.

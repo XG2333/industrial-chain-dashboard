@@ -16,6 +16,8 @@ data/stock-targets/**
 runtime/**
 !runtime/README.md
 artifacts/
+.chroma/
+chroma/
 *.xlsx
 *.xls
 *.xlsm

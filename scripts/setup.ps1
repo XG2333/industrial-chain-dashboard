@@ -1,5 +1,6 @@
 param(
-    [string]$PipIndexUrl = "https://pypi.org/simple"
+    [string]$PipIndexUrl = "https://pypi.org/simple",
+    [switch]$EnableIntelligence
 )
 
 $ErrorActionPreference = "Stop"
@@ -34,6 +35,13 @@ if ($LASTEXITCODE -ne 0) { throw "pip upgrade failed." }
 if ($LASTEXITCODE -ne 0) { throw "Python dependency installation failed." }
 & $VenvPython -m pip install --index-url $PipIndexUrl -e (Join-Path $RepoRoot "packages\selecting-skill")
 if ($LASTEXITCODE -ne 0) { throw "Local selecting-skill installation failed." }
+$IntelligencePackage = Join-Path $RepoRoot "packages\industry-intelligence"
+$IntelligenceTarget = $IntelligencePackage
+if ($EnableIntelligence) {
+    $IntelligenceTarget = "${IntelligencePackage}[all]"
+}
+& $VenvPython -m pip install --index-url $PipIndexUrl -e $IntelligenceTarget
+if ($LASTEXITCODE -ne 0) { throw "Optional industry-intelligence installation failed." }
 
 if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
     throw "Node.js/npm 18+ is required to build the dashboard frontend."

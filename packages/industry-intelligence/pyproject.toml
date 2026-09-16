@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "industry-intelligence"
+version = "0.1.0"
+description = "Optional RAG, tool-calling, LangGraph, MCP, and vector-search layer for the industry-chain dashboard."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.optional-dependencies]
+rag = [
+    "langchain-text-splitters>=0.3,<2",
+    "chromadb>=1,<2",
+]
+graph = ["langgraph>=1,<2"]
+mcp = ["mcp>=2,<3"]
+openai = ["openai>=2,<3"]
+all = [
+    "langchain-text-splitters>=0.3,<2",
+    "chromadb>=1,<2",
+    "langgraph>=1,<2",
+    "mcp>=2,<3",
+    "openai>=2,<3",
+]
+dev = ["pytest>=8"]
+
+[project.scripts]
+industry-intelligence = "industry_intelligence.cli:main"
+industry-intelligence-mcp = "industry_intelligence.mcp_server:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-q"

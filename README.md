@@ -21,6 +21,7 @@
 .
 ├─ apps/dashboard/              # FastAPI 后端与 React/ECharts 前端
 ├─ packages/selecting-skill/    # 变量分类、规则编译、SQLite 审计与导出
+├─ packages/industry-intelligence/ # 可选 RAG、工具调用、LangGraph、MCP 与向量检索侧车
 ├─ pipeline/                    # 三产业数据流水线、业务规则、Skill3/Skill4
 ├─ scripts/                     # 仓库级安装、配置、处理与启动入口
 ├─ data/                        # 私有输入和生成结果；内容不进入 Git
@@ -76,10 +77,22 @@
 
 AI 只用于候选不唯一或单位冲突等模糊项目；确定性规则、候选集合与最终校验仍是结果边界。
 
+## 可选智能检索与工具层
+
+仓库提供默认关闭的独立智能侧车，包含规则文档 RAG、SQLite/Chroma 向量检索、只读 Function Calling、LangGraph 研究流程和 MCP Server。它不被现有流水线、Dashboard API 或前端导入，因此安装后不会改变原有处理结果和页面输出。
+
+显式安装全部可选能力：
+
+```powershell
+./scripts/setup.ps1 -EnableIntelligence
+```
+
+配置和使用方法见 [packages/industry-intelligence/README.md](packages/industry-intelligence/README.md)，架构边界见 [docs/INTELLIGENCE_ARCHITECTURE.md](docs/INTELLIGENCE_ARCHITECTURE.md)。
+
 ## 测试
 
 ```powershell
-.\.venv\Scripts\python.exe -m pytest packages/selecting-skill/tests pipeline/tests apps/dashboard/tests
+.\.venv\Scripts\python.exe -m pytest packages/selecting-skill/tests packages/industry-intelligence/tests pipeline/tests apps/dashboard/tests
 Set-Location apps/dashboard/frontend
 npm test
 ```

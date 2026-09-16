@@ -7,6 +7,7 @@
 - licensed market data or internal indicator values;
 - real watchlists or analyst-selected stock pools;
 - SQLite databases, caches, logs, audit exports, and workflow snapshots;
+- RAG chunks, embeddings, Chroma indexes, retrieved context, and tool-call audit records;
 - usernames, passwords, cookies, tokens, private keys, or local user paths.
 
 ## Repository safeguards
@@ -16,6 +17,8 @@
 - stock-target configuration contains only a minimal, public demonstration entry per industry.
 - production and sample data directories are not copied from the private project.
 - `scripts/prepublish_check.ps1` performs a second release-time scan.
+
+The optional intelligence layer indexes only `docs/`, `pipeline/docs/`, and `pipeline/rules/` by default. It deliberately excludes `data/`, runtime workbooks, `.env` files, and credentials. Before using remote embeddings, Function Calling, or an external MCP host, confirm that every transmitted document, catalog row, and tool result is authorized for that provider.
 
 ## If a secret was ever committed
 
